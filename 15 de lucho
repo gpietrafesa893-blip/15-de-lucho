@@ -1,75 +1,75 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis 15 - Lucho 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #000428, #004e92);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    #contador {
+      font-size: 2rem;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>✨ Mis 15 ✨</h1>
+  <h2>Estás invitado a la fiesta de Lucho 🎉</h2>
+  <div id="contador">Cargando...</div>
+  <footer>📍 Salón Imperial - 20 de Septiembre, 21:00 hs</footer>
 
-export default function QuinceInvitation() {
-  // Cambia esta fecha a la de tu fiesta
-  const targetDate = new Date("2025-11-01T20:00:00").getTime();
-  const [timeLeft, setTimeLeft] = useState({});
+  <script>
+    // Fecha del cumple
+    const fechaFiesta = new Date("Sep 20, 2025 21:00:00").getTime();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
+    function actualizarContador() {
+      const ahora = new Date().getTime();
+      const diferencia = fechaFiesta - ahora;
 
-      if (difference <= 0) {
-        clearInterval(interval);
-        setTimeLeft({ expired: true });
-      } else {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
+      if (diferencia <= 0) {
+        document.getElementById("contador").innerHTML = "🎊 ¡La fiesta ya empezó! 🎊";
+        return;
       }
-    }, 1000);
 
-    return () => clearInterval(interval);
-  }, [targetDate]);
+      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 text-white p-6">
-      <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-bounce">
-        ¡Mis 15 años!
-      </h1>
-      <p className="text-xl md:text-2xl mb-8">Estás invitado a mi fiesta 🎉</p>
+      document.getElementById("contador").innerHTML =
+        dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+    }
 
-      {/* Contador */}
-      {timeLeft.expired ? (
-        <p className="text-2xl font-semibold">¡La fiesta ya empezó! 🥳</p>
-      ) : (
-        <div className="grid grid-cols-4 gap-4 text-center mb-8">
-          <div>
-            <p className="text-4xl font-bold">{timeLeft.days}</p>
-            <span>días</span>
-          </div>
-          <div>
-            <p className="text-4xl font-bold">{timeLeft.hours}</p>
-            <span>horas</span>
-          </div>
-          <div>
-            <p className="text-4xl font-bold">{timeLeft.minutes}</p>
-            <span>minutos</span>
-          </div>
-          <div>
-            <p className="text-4xl font-bold">{timeLeft.seconds}</p>
-            <span>segundos</span>
-          </div>
-        </div>
-      )}
-
-      <div className="flex flex-col md:flex-row gap-4">
-        <Button className="bg-white text-pink-600 hover:bg-gray-200 rounded-2xl px-6 py-3">
-          Confirmar asistencia
-        </Button>
-        <Button className="bg-white text-indigo-600 hover:bg-gray-200 rounded-2xl px-6 py-3">
-          Ver ubicación
-        </Button>
-      </div>
-    </div>
-  );
-}
+    setInterval(actualizarContador, 1000);
+  </script>
+</body>
+</html>
